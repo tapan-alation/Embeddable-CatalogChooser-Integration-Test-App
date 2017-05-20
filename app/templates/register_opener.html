@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Register an Opener</title>
+    <head>
+        <style type="text/css">
+            input {
+                width: 75%;
+            }
+        </style>
+    </head>
+</head>
+<body>
+    <h1>Register an Opener</h1>
+    <form method="post"> {% csrf_token %}
+        <p>
+            <label for="alationBaseUrl">Alation Base URL:</label>
+            <input type="input" name="alationBaseURL" id="alationBaseUrl" />
+        </p>
+        <p>
+            <label for="alationAPIToken">Alation API Token:</label>
+            <input type="input" name="alationAPIToken" id="alationAPIToken" />
+        </p>
+        <p>
+            <label for="appName">App Name:</label>
+            <input type="input" name="appName" id="appName" value="Demo Register Opener App"/>
+        </p>
+        <p>
+            <label for="acceptObjectTypes">Accept Object Types:</label>
+            <input type="input" name="acceptObjectTypes" id="acceptObjectTypes" value="table,attribute,query"/>
+        </p>
+        <p>
+            <label for="acceptDataSourceTypes">Accept Data Source Types</label>
+            <input type="input" name="acceptDataSourceTypes" id="acceptDataSourceTypes" value="bigquery,db2,greenplum,hive,hive2,impala,mysql,netezza,oracle,orient,postgresql,presto,redshift,sap,sas,snowflake,sqlite,sqlserver,sybase,teradata,teradataaster,vertica"/>
+        </p>
+        <button id="registerOpener">Register</button>
+    </form>
+</body>
+</html>

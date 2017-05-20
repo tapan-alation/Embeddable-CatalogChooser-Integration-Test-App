@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Embedded Catalog Chooser Test</title>
+    <style type="text/css">
+        input {
+            width: 60%;
+        }
+    </style>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+</head>
+<body>
+    <p>
+        <label for="alationBaseUrl">Alation Base URL:</label>
+        <input type="input" name="alationBaseURL" id="alationBaseURL" />
+        <button id="setAlationURL">Set</button>
+    </p>
+    <div id='catalog-chooser-results'></div>
+    <script type="text/javascript">
+        var alationCatalogChooser;
+        $("#setAlationURL").click( function (event) {
+            var alation_url = $("#alationBaseURL").val();
+            alation_url += alation_url[alation_url.length - 1] !== "/" ? "/" : "";
+            alation_sdk_script_url = alation_url + "integration/catalog_chooser/v1/sdk.js";
+            $.ajax({
+              url: alation_sdk_script_url,
+              dataType: "script",
+              success: function() {
+                alationCatalogChooser = Alation.Catalog.createChooser({
+                    embedMethod: Alation.Catalog.ChooserEmbedMethod.MODAL,  // How to open the chooser (currently MODAL or CUSTOM)
+                    onSelect: catalogSelectHandler,  // Callback for when user selects an object
+                    onCancel: function () {},  // Callback for when the user cancels
+                    acceptObjectTypes: [],  // List of acceptable oTypes (empty == all)
+                });
+                alationCatalogChooser.open();
+              }
+            });
+
+            function catalogSelectHandler (data) {
+                console.log(data);
+                var html = "";
+                for (var k in data) {
+                    var v = data[k];
+                    if (typeof(v === 'object')) {
+                        html += JSON.stringify(v);
+                    } else {
+                        html += v;
+                    }
+                    html += "<br>";
+                }
+                $("#catalog-chooser-results").html(html);
+                alationCatalogChooser.destroy();
+            }
+        });
+    </script>
+</body>
+</html>
